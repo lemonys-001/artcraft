@@ -1,59 +1,47 @@
-# ArtCraft (self-hosted)
+# ArtCraft Suite — cPanel self-host
 
-Static hosting for the [ArtCraft](https://getartcraft.com) open-source creative
-suite, served at **https://ac.lemonyss.dpdns.org**.
-
-Each app is a self-contained WebAssembly build that runs entirely in the browser.
-Nothing a user opens here is uploaded to a server. LemonOS embeds these pages in
-sandboxed iframes.
+All 12 ArtCraft web apps, served as static files from `ac.lemony.dpdns.org` via cPanel.
 
 ## Layout
 
 ```
-/                 hub landing page, links to each app
-/_headers         Cloudflare Pages header rules (wasm MIME type, caching)
-/photocraft/      PhotoCraft — photo / raster editor
-/gridcraft/       GridCraft  — spreadsheets
-/deckcraft/       DeckCraft  — presentations
-/cadcraft/        CADCraft   — CAD drawings
-/figcraft/        FigCraft   — interface / diagram design
-/soundcraft/      SoundCraft — audio editing
+public_html/            (or wherever the domain's docroot is)
+├── index.html          hub page listing all 12 apps
+├── .htaccess           Apache: wasm MIME type, gzip, caching
+├── _headers            (unused by Apache — kept for parity with Cloudflare)
+├── cadcraft/
+├── deckcraft/
+├── designcraft/
+├── effectcraft/
+├── figcraft/
+├── gridcraft/
+├── lightcraft/
+├── pdfcraft/
+├── photocraft/
+├── soundcraft/
+├── vectorcraft/
+└── wordcraft/
 ```
 
-Each app folder is unmodified ArtCraft output (`index.html` + hashed `.js` +
-`.wasm` + font/license assets). All asset URLs are relative, so any subpath works.
+Each app folder is unmodified ArtCraft output (`index.html` + hashed `.js` + `.wasm` + font/license files). All asset URLs inside each `index.html` are relative, so any subpath works.
 
-## Deployment
+## Deploy (cPanel)
 
-This repo is static — no build step. Point a Cloudflare Pages project at it
-(connect this repo, build command empty, output directory `/`).
+1. Extract the zip into the domain's document root (usually `public_html`).
+2. Ensure Apache has `mod_mime` loaded (it does by default on cPanel). The root `.htaccess` sets `application/wasm` for `.wasm` files — without this, browsers refuse to stream-compile WebAssembly and the apps load slowly or not at all.
+3. No PHP, no server-side code. Nothing to build.
 
-### 25 MiB per-file limit
+## Large-file upload note
 
-Cloudflare Pages rejects any single file over **25 MiB**. Six ArtCraft web builds
-embed a WebAssembly bundle larger than that, so they are **not** included here:
-
-| App         | wasm size |
-|-------------|-----------|
-| LightCraft  | 26.0 MiB  |
-| PdfCraft    | 36.3 MiB  |
-| DesignCraft | 37.7 MiB  |
-| WordCraft   | 37.9 MiB  |
-| EffectCraft | 59.6 MiB  |
-| VectorCraft | 61.7 MiB  |
-
-Adding any of these would make the whole Pages deployment fail. To host them,
-use an origin without the per-file cap (e.g. an R2 bucket or a VPS) and reverse
-proxy it under the same domain.
+Some `.wasm` files exceed cPanel's default PHP upload cap (often 64M). If the file manager refuses to upload, either:
+- raise `upload_max_filesize` / `post_max_size` in `php.ini`, or
+- use FTP/SFTP (no PHP limit), or
+- extract the zip on the server via SSH (`unzip artcraft-suite-12-apps.zip`).
 
 ## Updating an app
 
-Download the latest `<app>-web-<version>.zip` from
-`https://github.com/storytold/<app>/releases`, then replace the app folder with
-the archive contents (drop the versioned wrapper directory, `.htaccess`, and the
-per-app `_headers`).
+Download the latest `<app>-web-<version>.zip` from `https://github.com/storytold/<app>/releases`, replace the app folder with the archive contents (drop the versioned wrapper directory and `.htaccess` — the root `.htaccess` already covers all apps).
 
 ## Licenses
 
-ArtCraft is Apache-2.0. Each app folder keeps its upstream `LICENSE-APACHE`,
-`LICENSE-MIT`, `README.md`, and attribution files. No source is modified.
+ArtCraft is Apache-2.0. Each app folder keeps its upstream `LICENSE-APACHE`, `LICENSE-MIT`, `README.md`, and attribution files. No source is modified.

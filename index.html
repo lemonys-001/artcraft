@@ -1,57 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ArtCraft</title>
-<style>
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh; background: #1a1b1e; color: #e7e7e9;
-    font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    display: flex; flex-direction: column;
-  }
-  header { width: 100%; max-width: 980px; margin: 0 auto; padding: 60px 24px 4px; }
-  h1 { margin: 0; font-size: clamp(30px, 5vw, 54px); letter-spacing: -0.025em; }
-  .lede { margin: 14px 0 0; max-width: 58ch; color: #a9abb2; }
-  .lede code { color: #cfd1d6; font-size: 0.94em; }
-  main {
-    flex: 1; width: 100%; max-width: 980px; margin: 0 auto; padding: 28px 24px;
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px;
-  }
-  a.card {
-    display: flex; flex-direction: column; gap: 8px; padding: 20px;
-    border: 1px solid #2e3036; border-radius: 12px; background: #202126;
-    color: inherit; text-decoration: none;
-    transition: border-color .16s ease, transform .16s ease, background .16s ease;
-  }
-  a.card:hover { border-color: #4c505a; background: #24262c; transform: translateY(-2px); }
-  a.card:focus-visible { outline: 2px solid #7aa2ff; outline-offset: 2px; }
-  .card h2 { margin: 0; font-size: 17px; letter-spacing: -0.01em; }
-  .card p { margin: 0; color: #8b8e96; font-size: 13.5px; }
-  footer {
-    width: 100%; max-width: 980px; margin: 0 auto; padding: 22px 24px 40px;
-    border-top: 1px solid #2a2c31; color: #787b83; font-size: 13px;
-  }
-  footer a { color: #b9bcc4; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ArtCraft Suite</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23f5d547' rx='20' width='100' height='100'/><text x='50' y='68' font-size='60' text-anchor='middle' fill='%230a0a0a' font-family='sans-serif' font-weight='bold'>A</text></svg>">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ground: #111216;
+      --panel: #1a1b22;
+      --rule: #2a2c35;
+      --ink: #e8e8ea;
+      --ink-2: #9a9ba4;
+      --accent: #f5d547;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--ground); color: var(--ink); font: 15px/1.6 system-ui, sans-serif; padding: 24px; }
+    h1 { font-size: clamp(28px, 5vw, 52px); margin-bottom: 4px; }
+    p.sub { color: var(--ink-2); margin-bottom: 32px; max-width: 60ch; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; max-width: 1200px; }
+    a {
+      display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 12px;
+      background: var(--panel); border: 1px solid var(--rule); color: var(--ink);
+      text-decoration: none; transition: border-color .15s, transform .15s;
+    }
+    a:hover { border-color: var(--accent); transform: translateY(-2px); }
+    a b { font-size: 16px; font-weight: 600; }
+    a span { color: var(--ink-2); font-size: 13px; }
+    footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--rule); color: var(--ink-2); font-size: 12px; max-width: 1200px; }
+    footer a { color: var(--accent); display: inline; padding: 0; border: 0; background: none; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>ArtCraft</h1>
-    <p class="lede">A self-hosted, open-source creative suite. Every app runs entirely in your browser &mdash; whatever you open here is never uploaded anywhere.</p>
-  </header>
-  <main>
-    <a class="card" href="./photocraft/"><h2>PhotoCraft</h2><p>Photo and raster image editor.</p></a>
-    <a class="card" href="./gridcraft/"><h2>GridCraft</h2><p>Spreadsheets and tabular data.</p></a>
-    <a class="card" href="./deckcraft/"><h2>DeckCraft</h2><p>Presentation slides.</p></a>
-    <a class="card" href="./cadcraft/"><h2>CADCraft</h2><p>2D/3D CAD drawings.</p></a>
-    <a class="card" href="./figcraft/"><h2>FigCraft</h2><p>Interface and diagram design.</p></a>
-    <a class="card" href="./soundcraft/"><h2>SoundCraft</h2><p>Audio recording and editing.</p></a>
-  </main>
+  <h1>ArtCraft Suite</h1>
+  <p class="sub">Twelve open-source creative apps, self-hosted. Each one runs entirely in your browser — files never leave your device.</p>
+  <div class="grid">
+    <a href="photocraft/"><b>PhotoCraft</b><span>Photo &amp; image editing</span></a>
+    <a href="vectorcraft/"><b>VectorCraft</b><span>Vector illustration</span></a>
+    <a href="wordcraft/"><b>WordCraft</b><span>Word processor</span></a>
+    <a href="gridcraft/"><b>GridCraft</b><span>Spreadsheet</span></a>
+    <a href="deckcraft/"><b>DeckCraft</b><span>Presentation slides</span></a>
+    <a href="pdfcraft/"><b>PdfCraft</b><span>PDF editing &amp; tools</span></a>
+    <a href="designcraft/"><b>DesignCraft</b><span>Graphic design &amp; layouts</span></a>
+    <a href="effectcraft/"><b>EffectCraft</b><span>Video effects &amp; compositing</span></a>
+    <a href="figcraft/"><b>FigCraft</b><span>UI &amp; diagram design</span></a>
+    <a href="cadcraft/"><b>CadCraft</b><span>CAD &amp; technical drawing</span></a>
+    <a href="lightcraft/"><b>LightCraft</b><span>Lighting &amp; environment</span></a>
+    <a href="soundcraft/"><b>SoundCraft</b><span>Audio recording &amp; editing</span></a>
+  </div>
   <footer>
-    <p>Built on <a href="https://getartcraft.com" rel="noopener">ArtCraft</a> (Apache-2.0). Apps whose WebAssembly bundle exceeds Cloudflare Pages&rsquo; 25&nbsp;MiB per-file limit are not included in this deployment.</p>
+    All apps © the <a href="https://getartcraft.com" target="_blank" rel="noopener">ArtCraft project</a> — Apache-2.0 &amp; MIT licences. This is a self-hosted mirror.
   </footer>
 </body>
 </html>
